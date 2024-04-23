@@ -12,7 +12,7 @@ public class LinearSolver {
         int numVertices = graph.getNbVertices();
         int destination = graph.getDestination();
         int source = graph.getSource();
-        List<List<AbstractMap.SimpleEntry<Integer, Double>>> adjacencyList = graph.getAdjacencyList();
+        List<List<Integer>> adjacencyList = graph.getAdjacencyList();
 
         // Création de la fonction objectif
         double[] coefficients = new double[numVertices];
@@ -33,8 +33,8 @@ public class LinearSolver {
             if( i != destination) {
                 double[] constraintCoefficients = new double[numVertices];
                 int cptConstraintCoefficient = 0;
-                for (AbstractMap.SimpleEntry<Integer, Double> pair : adjacencyList.get(i)) {
-                    double weight = pair.getValue();
+                for (int vertice : adjacencyList.get(i)) {
+                    int weight = 1;
                     if(weight > 0) {
                         constraintCoefficients[cptConstraintCoefficient] = -1 * weight;
                         cptConstraintCoefficient++;

@@ -4,7 +4,7 @@ import java.util.List;
 
 public class Graph {
     private final int nbVertices;
-    private final List<List<AbstractMap.SimpleEntry<Integer, Double>>> adjacencyList;
+    private final List<List<Integer>> adjacencyList;
 
     private int source;
 
@@ -44,39 +44,39 @@ public class Graph {
                         this.destination = vertexNum;
                     }
                     if(j < nbColumns - 1 && network.getArray().get(i).get(j + 1) != BoxValue.OBSTACLE) {
-                        this.addEdge(vertexNum, vertexNum + 1, 1);                      // droite
+                        this.addEdge(vertexNum, vertexNum + 1);                      // droite
                     }
                     if(j < nbColumns - 1 && i < nbRows - 1 && network.getArray().get(i + 1).get(j + 1) != BoxValue.OBSTACLE) {
-                        this.addEdge(vertexNum, vertexNum + nbColumns + 1, Math.sqrt(2));      // bas droite
+                        this.addEdge(vertexNum, vertexNum + nbColumns + 1);      // bas droite
                     }
                     if(i < nbRows - 1 && network.getArray().get(i + 1).get(j) != BoxValue.OBSTACLE) {
-                        this.addEdge(vertexNum, vertexNum + nbColumns, 1);              // bas
+                        this.addEdge(vertexNum, vertexNum + nbColumns);              // bas
                     }
                     if(i < nbRows - 1 && j > 0 && network.getArray().get(i + 1).get(j - 1) != BoxValue.OBSTACLE) {
-                        this.addEdge(vertexNum, vertexNum + nbColumns - 1, Math.sqrt(2));      // bas gauche
+                        this.addEdge(vertexNum, vertexNum + nbColumns - 1);      // bas gauche
                     }
                     if(j > 0 && network.getArray().get(i).get(j - 1) != BoxValue.OBSTACLE) {
-                        this.addEdge(vertexNum, vertexNum - 1, 1);                      // gauche
+                        this.addEdge(vertexNum, vertexNum - 1);                      // gauche
                     }
                     if(j > 0 && i > 0 && network.getArray().get(i - 1).get(j - 1) != BoxValue.OBSTACLE) {
-                        this.addEdge(vertexNum, vertexNum - nbColumns - 1, Math.sqrt(2));      // haut gauche
+                        this.addEdge(vertexNum, vertexNum - nbColumns - 1);      // haut gauche
                     }
                     if(i > 0 && network.getArray().get(i - 1).get(j) != BoxValue.OBSTACLE) {
-                        this.addEdge(vertexNum, vertexNum - nbColumns, 1);              // haut
+                        this.addEdge(vertexNum, vertexNum - nbColumns);              // haut
                     }
                     if(i > 0 && j < nbColumns - 1 && network.getArray().get(i - 1).get(j + 1) != BoxValue.OBSTACLE) {
-                        this.addEdge(vertexNum, vertexNum - nbColumns + 1, Math.sqrt(2));      // haut droite
+                        this.addEdge(vertexNum, vertexNum - nbColumns + 1);      // haut droite
                     }
                 }
             }
         }
     }
 
-    public void addEdge(int u, int v, double weight) {
-        if( u >= 0 && u < this.nbVertices && v >= 0 && v < this.nbVertices && weight >= 0 ) {
+    public void addEdge(int u, int v) {
+        if( u >= 0 && u < this.nbVertices && v >= 0 && v < this.nbVertices ) {
             boolean edgeExists = false;
-            for (AbstractMap.SimpleEntry<Integer, Double> entry : adjacencyList.get(u)) {
-                if (entry.getKey() == v) {
+            for (Integer entry : adjacencyList.get(u)) {
+                if (entry == v) {
                     edgeExists = true;
                     break;
                 }
@@ -84,14 +84,10 @@ public class Graph {
 
             // Ajouter l'arête si elle n'existe pas déjà
             if (!edgeExists) {
-                adjacencyList.get(u).add(new AbstractMap.SimpleEntry<>(v, weight));
-                adjacencyList.get(v).add(new AbstractMap.SimpleEntry<>(u, weight)); // Pour les graphes non orientés, les poids sont symétriques
+                adjacencyList.get(u).add(v);
+                adjacencyList.get(v).add(u); // Pour les graphes non orientés, les poids sont symétriques
             }
         }
-    }
-
-    public List<AbstractMap.SimpleEntry<Integer, Double>> getNeighbors(int vertex) {
-        return adjacencyList.get(vertex);
     }
 
     public int getNbVertices() {
@@ -106,7 +102,7 @@ public class Graph {
         return destination;
     }
 
-    public List<List<AbstractMap.SimpleEntry<Integer, Double>>> getAdjacencyList() {
+    public List<List<Integer>> getAdjacencyList() {
         return adjacencyList;
     }
 
@@ -115,11 +111,9 @@ public class Graph {
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < nbVertices; i++) {
             sb.append("Vertex ").append(i).append(": ");
-            for (AbstractMap.SimpleEntry<Integer, Double> pair : adjacencyList.get(i)) {
-                int neighbor = pair.getKey();
-                double weight = pair.getValue();
-                sb.append("(").append(neighbor).append(", ");
-                sb.append(String.format("%.2f", weight)).append("), "); // Formater le poids avec 2 chiffres après la virgule
+            for (Integer vertice : adjacencyList.get(i)) {
+                int neighbor = vertice;
+                sb.append(" ").append(neighbor).append(" ");
             }
             sb.deleteCharAt(sb.length() - 1); // Supprimer la virgule finale
             sb.deleteCharAt(sb.length() - 1); // Supprimer l'espace final
