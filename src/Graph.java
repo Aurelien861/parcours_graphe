@@ -6,6 +6,10 @@ public class Graph {
     private final int nbVertices;
     private final List<List<AbstractMap.SimpleEntry<Integer, Double>>> adjacencyList;
 
+    private int source;
+
+    private int destination;
+
     public Graph(int nbVertices) {
         this.nbVertices = nbVertices;
         this.adjacencyList = new ArrayList<>();
@@ -34,6 +38,11 @@ public class Graph {
             for(int j = 0; j < nbColumns; j++) {
                 int vertexNum = i * nbColumns + j;
                 if(network.getArray().get(i).get(j) != BoxValue.OBSTACLE) {
+                    if(network.getArray().get(i).get(j) == BoxValue.START) {
+                        this.source = vertexNum;
+                    } else if(network.getArray().get(i).get(j) == BoxValue.END) {
+                        this.destination = vertexNum;
+                    }
                     if(j < nbColumns - 1 && network.getArray().get(i).get(j + 1) != BoxValue.OBSTACLE) {
                         this.addEdge(vertexNum, vertexNum + 1, 1);                      // droite
                     }
@@ -87,6 +96,18 @@ public class Graph {
 
     public int getNbVertices() {
         return nbVertices;
+    }
+
+    public int getSource() {
+        return source;
+    }
+
+    public int getDestination() {
+        return destination;
+    }
+
+    public List<List<AbstractMap.SimpleEntry<Integer, Double>>> getAdjacencyList() {
+        return adjacencyList;
     }
 
     @Override

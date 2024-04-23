@@ -1,0 +1,28 @@
+Compte Rendu : Modélisation du Problème du Plus Court Chemin sou forme d'un programme linéaire
+
+Introduction :
+Le problème du plus court chemin est un problème classique en théorie des graphes, avec des applications dans divers
+domaines tels que la logistique, les réseaux de télécommunication et la planification de trajets. L'objectif est de
+trouver le chemin le plus court entre deux sommets distincts dans un graphe, en minimisant la somme des poids des
+arêtes empruntées.
+
+Modélisation :
+Pour résoudre ce problème, nous avons formulé une modélisation sous la forme d'un programme linéaire. Nous décrivons
+ci-dessous les principales composantes de notre modèle :
+
+Variables de Décision : Nous avons utilisé des variables binaires pour représenter les arêtes empruntées dans le chemin.
+Chaque variable est associée à une paire de sommets et prend la valeur 1 si l'arête est empruntée et 0 sinon.
+Fonction Objectif : Notre objectif est de minimiser la somme des poids des arêtes empruntées, c'est-à-dire le chemin le
+plus court. Pour cela, nous avons défini une fonction objectif qui consiste à minimiser la somme des produits des poids
+des arêtes par leurs variables associées.
+Contraintes : Nous avons ajouté des contraintes pour garantir que le chemin formé par les arêtes sélectionnées forme
+bien un chemin de la source à la destination. Cela inclut des contraintes pour s'assurer que chaque sommet est relié au
+moins une fois dans le chemin et que les arêtes sélectionnées respectent les capacités des sommets.
+Implémentation :
+Nous avons mis en œuvre notre modèle à l'aide de la bibliothèque Apache Commons Math, en utilisant le solveur Simplex
+pour résoudre le problème d'optimisation linéaire.
+
+Conclusion :
+En conclusion, notre approche offre une modélisation précise et efficace du problème du plus court chemin sous forme
+d'un programme linéaire. Cette modélisation permet une résolution rapide et précise du problème, avec des applications
+potentielles dans divers domaines.

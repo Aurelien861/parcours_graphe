@@ -16,5 +16,6 @@ public class Main {
         System.out.println(graph);*/
         Graph graph = new Graph(path);
         System.out.println(graph);
+        System.out.println(LinearSolver.solveShortestPath(graph));
     }
 }
